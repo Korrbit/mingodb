@@ -1,4 +1,4 @@
-module github.com/krullgra/mingodb
+module mingodb
 
 go 1.17
 
