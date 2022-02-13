@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"os"
-	mingodb "github.com/krullgra/mingodb"
+	mingodb "github.com/korrbit/mingodb"
 )
 
 func main() {
