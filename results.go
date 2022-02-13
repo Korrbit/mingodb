@@ -7,7 +7,8 @@ type SingleResult struct {
 }
 
 type MultiResult struct {
-	data []byte
+	//data []byte
+	ResultCount int // Number of returned results
 }
 
 type UpdateResult struct {

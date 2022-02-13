@@ -191,8 +191,28 @@ func (c *Collection) InsertMany(docs []interface{}) ([]InsertID, error) {
 
 // Find returns (up to) multiple documents from the collection based on the
 // filter provided.
-func (c *Collection) Find(filter interface{}) (*MultiResult, error) {
-	return nil, nil
+func (c *Collection) Find(filter interface{}) (*MultiResult, interface{}, error) {
+	var doc []byte
+	var m map[string]interface{}
+	var m2 []map[string]interface{}
+	err := c.db.db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte(c.name))
+		b.ForEach(func(k, v []byte) error {
+			doc = v
+			err := bson.Unmarshal(doc, &m)
+			if err != nil {
+				return err
+			}
+			m2 = append(m2, m)
+			return nil
+		})
+		return nil
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return &MultiResult{ ResultCount: len(m2)}, m2, nil
 }
 
 // FindOne returns the first document (if any) that matches the filter.
