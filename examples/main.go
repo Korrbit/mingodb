@@ -3,12 +3,13 @@ package main
 import (
 	"log"
 	"os"
+	mingodb "github.com/krullgra/mingodb"
 )
 
 func main() {
 	dbPath := "./test.db"
 
-	db, err := Open(dbPath)
+	db, err := mingodb.Open(dbPath)
 	if err != nil {
 		log.Panic(err)
 	}
