@@ -191,7 +191,7 @@ func (c *Collection) InsertMany(docs []interface{}) ([]InsertID, error) {
 
 // Find returns (up to) multiple documents from the collection based on the
 // filter provided.
-func (c *Collection) Find(filter interface{}) (*MultiResult, interface{}, error) {
+func (c *Collection) Find(filter interface{}) (MultiResult, interface{}, error) {
 	var doc []byte
 	var m map[string]interface{}
 	var m2 []map[string]interface{}
@@ -209,10 +209,10 @@ func (c *Collection) Find(filter interface{}) (*MultiResult, interface{}, error)
 		return nil
 	})
 	if err != nil {
-		return nil, nil, err
+		return MultiResult{ResultCount: 0}, nil, err
 	}
 
-	return &MultiResult{ ResultCount: len(m2)}, m2, nil
+	return MultiResult{ResultCount: len(m2)}, m2, nil
 }
 
 // FindOne returns the first document (if any) that matches the filter.
