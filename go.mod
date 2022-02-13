@@ -1,4 +1,4 @@
-module mingodb
+module github.com/korrbit/mingodb
 
 go 1.17
 
