@@ -3,6 +3,7 @@ package mingodb
 import (
 	"errors"
 	"reflect"
+	"time"
 
 	"github.com/fatih/structs"
 	bolt "go.etcd.io/bbolt"
@@ -20,7 +21,7 @@ type Database struct {
 // Open creates a new database connection at the path specified.
 // If the path does not exist, it will be created.
 func Open(path string) (*Database, error) {
-	db, err := bolt.Open(path, 0600, nil)
+	db, err := bolt.Open(path, 0666, &bolt.Options{Timeout: 3 * time.Second})
 	if err != nil {
 		return nil, err
 	}
@@ -192,6 +193,9 @@ func (c *Collection) InsertMany(docs []interface{}) ([]InsertID, error) {
 // Find returns (up to) multiple documents from the collection based on the
 // filter provided.
 func (c *Collection) Find(filter interface{}) (MultiResult, interface{}, error) {
+
+	// filter not yet implimented, this will return everything
+
 	var doc []byte
 	var m map[string]interface{}
 	var m2 []map[string]interface{}
