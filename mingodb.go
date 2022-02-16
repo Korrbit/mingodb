@@ -21,9 +21,9 @@ type Database struct {
 // Open creates a new database connection at the path specified.
 // If the path does not exist, it will be created.
 func Open(path string) (*Database, error) {
-	db, err := bolt.Open(path, 0666, &bolt.Options{Timeout: 3 * time.Second})
+	db, err := bolt.Open(path, 0666, &bolt.Options{Timeout: 3 * time.Second, ReadOnly: false})
 	if err != nil {
-		return nil, err
+		return nil, ErrOpeningDatabase
 	}
 	return &Database{Path: path, db: db}, nil
 }
